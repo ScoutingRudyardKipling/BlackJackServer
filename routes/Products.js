@@ -3,7 +3,7 @@
 var Base = require('./Base');
 var express = require('express');
 var router = express.Router();
-var Group = require('../models/Group');
+var Product = require('../models/Product');
 const ArrayIntersect = require('array-intersection');
 
 class Products extends Base {
@@ -24,11 +24,11 @@ class Products extends Base {
      * Resolve routes
      */
     resolve() {
-        // allow listing products
+        // allow listing scanned products
         this.regRoute('get', '/', [], [], true).then(this.getProducts.bind(this));
 
-        // allow showing products
-        this.regRoute('get', '/:productId', [], [], true).then(this.getProduct.bind(this));
+        // allow scanning product
+        this.regRoute('post', '/', ['code'], [], true).then(this.postProduct.bind(this));
     };
 
     /**
@@ -38,25 +38,9 @@ class Products extends Base {
      * @param response
      */
     getProducts(request, input, response) {
-        console.log(request.user);
-
         response.json({
-            data: request.user.getAllData()
+            data: request.user.products
         });
-        // var filter = {};
-        // var groups = [];
-        // Group.findAll(filter, function(err, us){
-        //     if (err) return response.status(400).send({msg:err});
-        //
-        //     for(var index in us) {
-        //         groups.push(us[index].getPublicData());
-        //     }
-        //
-        //     response.json({
-        //         filter: filter,
-        //         data: groups
-        //     });
-        // });
     }
 
     /**
@@ -66,8 +50,60 @@ class Products extends Base {
      * @param response
      * @returns {*}
      */
-    getProduct(request, input, response) {
-        return response.json(input.productId.getPublicData());
+    postProduct(request, input, response) {
+        let self = this;
+        Product.findByCode(input['code'], function (error, products) {
+            if (error || products.length === 0) {
+                self.postReward(request, input, response);
+            } else {
+                if (request.user.addProduct(products[0])) {
+                    request.user.save();
+                    response.json({
+                        success: true,
+                        data: request.user.products
+                    });
+                } else {
+                    response.json({
+                        success: false,
+                        error: 'PRODUCT_ALREADY_SCANNED',
+                        msg: 'Paniek! Dit product zit al in je winkelwagen.'
+                    });
+                }
+            }
+        });
+    }
+
+    /**
+     *
+     * @param request
+     * @param input
+     * @param response
+     * @returns {*}
+     */
+    postReward(request, input, response) {
+        Product.findByCode(input['code'], function (error, rewards) {
+            if (error || rewards.length === 0) {
+                response.json({
+                    success: false,
+                    error: 'CODE_UNKNOWN',
+                    msg: 'Helaas, deze code is ongeldig.'
+                });
+            } else {
+                if (request.user.addReward(rewards[0])) {
+                    request.user.save();
+                    response.json({
+                        success: true,
+                        data: request.user.rewards
+                    });
+                } else {
+                    response.json({
+                        success: false,
+                        error: 'PRODUCT_ALREADY_SCANNED',
+                        msg: 'Paniek! Dit product zit al in je winkelwagen.'
+                    });
+                }
+            }
+        });
     }
 }
 

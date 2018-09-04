@@ -276,6 +276,7 @@ groupSchema.methods.addProduct = function (product) {
         image: product.image,
         costs: product.costs,
         reward: product.reward,
+        code: product.code,
         bought: false,
         rewarded: false
     });
