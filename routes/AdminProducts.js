@@ -35,12 +35,12 @@ class AdminProducts extends Base {
             .then(this.getProduct.bind(this));
 
         // allow creating a product
-        this.regRoute('post', '/', ['name', 'code', 'image', 'costs', 'reward'], [], true)
+        this.regRoute('post', '/', ['name', 'code', 'rewardCode', 'image', 'costs', 'reward'], [], true)
             .before(this.requireAuthAdmin)
             .then(this.postProduct.bind(this));
 
         // allow updating product
-        this.regRoute('put', '/:productId', ['productId'], ['name', 'code', 'image', 'costs', 'reward'], true)
+        this.regRoute('put', '/:productId', ['productId'], ['name', 'code', 'rewardCode', 'image', 'costs', 'reward'], true)
             .before(this.requireAuthAdmin)
             .then(this.updateProduct.bind(this));
 
@@ -80,26 +80,28 @@ class AdminProducts extends Base {
      * @param response
      */
     postProduct(request, input, response) {
-        Product.codeIsUnique(input['code'], function (error, success) {
-            if (!success) {
-                // code is duplicate
+        if(input['code'] === input['rewardCode']) {
+            response.status(409).json({
+                success: false,
+                message: 'codes cant be equal!'
+            });
+            return;
+        }
 
-                response.status(409).json({
-                    success: false,
-                    message: 'code is already chosen, please choose another one'
-                });
-                return;
-            }
-
-
-            // code is not duplicate
+        Promise.all([
+            Product.promiseCodeIsUnique(input['code']),
+            Product.promiseCodeIsUnique(input['rewardCode']),
+            Product.promiseRewardCodeIsUnique(input['code']),
+            Product.promiseRewardCodeIsUnique(input['rewardCode'])
+        ]).then(function () {
+            // both codes are unique
             let product = new Product({
                 name: input['name'],
                 code: input['code'],
+                rewardCode: input['rewardCode'],
                 image: input['image'],
                 costs: input['costs'],
                 reward: input['reward']
-
             });
 
             product.save(function (err) {
@@ -115,8 +117,12 @@ class AdminProducts extends Base {
                     success: true
                 });
             });
+        }).catch(function () {
+            response.status(409).json({
+                success: false,
+                message: 'one of the codes is already chosen, please choose another one'
+            });
         });
-
     }
 
     /**
