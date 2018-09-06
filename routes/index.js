@@ -6,4 +6,8 @@ router.get('/', function(req, res, next) {
     res.render('index', { title: 'BlackJack 2018' });
 });
 
+router.get('/a', function(req, res, next) {
+    res.render('index', { title: 'BlackJack 2018' });
+});
+
 module.exports = router;

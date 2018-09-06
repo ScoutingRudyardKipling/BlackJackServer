@@ -13,8 +13,8 @@ class Groups extends Base {
      * Dealing with group login and logouts
      * @param router
      */
-    constructor() {
-        super(router);
+    constructor(app) {
+        super(app, router);
 
         // add routes to router
         this.resolve();
@@ -45,14 +45,17 @@ class Groups extends Base {
                 groups.push(us[index].getPublicData());
             }
 
+            this.broadcast('highscores', groups);
+            this.sendToAuthenticatedGroup(request, 'get groups', {});
+
             response.json({
                 filter: filter,
                 data: groups
             });
-        });
+        }.bind(this));
     }
 
 
 }
 
-module.exports = new Groups();
+module.exports = Groups;

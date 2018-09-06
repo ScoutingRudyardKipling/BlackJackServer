@@ -8,21 +8,3 @@ module.exports = {
         database: 'blackjack'
     }
 };
-
-
-// db.createUser(
-//     {
-//         user: "rootuser",
-//         pwd: "zW3nGe1P4Ssw0rD",
-//         roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
-//     }
-// )
-
-
-//
-// db.createUser(
-//     {
-//         user: "black18jack",
-//         pwd: "jijmijnwachtwoordstelen?",
-//         roles: [ { role: "readWrite", db: "blackjack" } ]
-//     }

@@ -13,8 +13,8 @@ class Auth extends Base {
      * Dealing with user login and logouts
      * @param router
      */
-    constructor() {
-        super(router);
+    constructor(app) {
+        super(app, router);
 
         // apply middleware if necessary
         router.use(function (req, res, next) {
@@ -107,4 +107,4 @@ class Auth extends Base {
     }
 }
 
-module.exports = new Auth();
+module.exports = Auth;

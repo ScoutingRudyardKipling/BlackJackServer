@@ -1,32 +1,34 @@
 var express = require('express');
 var path = require('path');
-// var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-// const config = require('./lib/config');
-
 var routes = require('./routes/index');
-
+var io = require('socket.io');
+var IOController = require('./IO/IOController');
 var app = express();
+
+var AuthController = require('./routes/Auth');
+var GroupController = require('./routes/Groups');
+var ProductController = require('./routes/Products');
+var AdminProductController = require('./routes/AdminProducts');
+var AdminGroupController = require('./routes/AdminGroups');
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 
-app.use('/auth', require('./routes/Auth').router);
-app.use('/groups', require('./routes/Groups').router);
-app.use('/products', require('./routes/Products').router);
-app.use('/admin/products', require('./routes/AdminProducts').router);
-app.use('/admin/groups', require('./routes/AdminGroups').router);
+app.use('/auth', (new AuthController(app)).router);
+app.use('/groups', (new GroupController(app)).router);
+app.use('/products', (new ProductController(app)).router);
+app.use('/admin/products', (new AdminProductController(app)).router);
+app.use('/admin/groups', (new AdminGroupController(app)).router);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -59,5 +61,10 @@ app.use(function(err, req, res, next) {
     });
 });
 
+/**
+ * Socket.IO
+ */
+app.io = io();
+app.IOController = new IOController(app.io);
 
 module.exports = app;

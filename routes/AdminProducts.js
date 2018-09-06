@@ -13,8 +13,8 @@ class AdminProducts extends Base {
      * Dealing with group login and logouts
      * @param router
      */
-    constructor() {
-        super(router);
+    constructor(app) {
+        super(app, router);
 
         // add routes to router
         this.resolve();
@@ -172,4 +172,4 @@ class AdminProducts extends Base {
     }
 }
 
-module.exports = new AdminProducts();
+module.exports = AdminProducts;

@@ -11,9 +11,10 @@ let models = {
 
 class Base {
 
-    constructor(router) {
+    constructor(app, router) {
         //noinspection JSUnresolvedVariable
         this.router = router;
+        this.app = app;
     }
 
     /**
@@ -84,6 +85,14 @@ class Base {
                 message: 'Insufficient permissions'
             });
         }
+    }
+
+    broadcast(channel, data) {
+        this.app.IOController.broadcast(channel, data);
+    }
+
+    sendToAuthenticatedGroup(request, event, data) {
+        this.app.IOController.sendToGroup(request.user._id, event, data);
     }
 
     /**
@@ -226,8 +235,8 @@ class Base {
             }, function (error, object) {
                 if (error || !object) {
                     reject(error || {
-                            description: 'Object reference not found'
-                        });
+                        description: 'Object reference not found'
+                    });
                 } else {
                     resolve([type, object]);
                 }
