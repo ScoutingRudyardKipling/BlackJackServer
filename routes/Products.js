@@ -177,7 +177,7 @@ class Products extends Base {
                         response.json({
                             success: false,
                             error: 'UNKNOWN_ERROR',
-                            message: '3Er trad een onbekende fout op.'
+                            message: 'Er trad een onbekende fout op.'
                         })
                     });
                 } else {
@@ -257,7 +257,7 @@ class Products extends Base {
             response.json({
                 success: false,
                 error: 'UNKNOWN_ERROR',
-                message: '4Er trad een onbekende fout op.'
+                message: 'Er trad een onbekende fout op.'
             })
         });
     }
