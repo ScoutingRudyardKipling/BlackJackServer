@@ -42,6 +42,7 @@ class Base {
         // apply argument resolving
         builder.before(function (request, parameters, response, next) {
             let params = this._get(required, optional, request);
+            console.log('params', params, request.body);
 
             // invalid arguments for call
             if (params === false) {

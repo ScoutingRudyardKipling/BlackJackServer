@@ -60,16 +60,23 @@ class Products extends Base {
                 self.postRewardProduct(request, input, response);
             } else {
                 if (request.user.addProduct(products[0])) {
-                    request.user.save();
-                    response.json({
-                        success: true,
-                        data: request.user.getAllData()
+                    request.user.save().then(() => {
+                        response.json({
+                            success: true,
+                            data: request.user.getAllData()
+                        })
+                    }).catch((e) => {
+                        response.json({
+                            success: false,
+                            error: 'UNKNOWN_ERROR',
+                            message: 'Er trad een onbekende fout op.'
+                        })
                     });
                 } else {
                     response.json({
                         success: false,
                         error: 'PRODUCT_ALREADY_SCANNED',
-                        msg: 'Paniek! Dit product zit al in je winkelwagen.'
+                        message: 'Paniek! Dit product zit al in je winkelwagen.'
                     });
                 }
             }
@@ -92,46 +99,53 @@ class Products extends Base {
                 // verify that product is scanned
                 let product = null;
                 let scanned = products[0];
-                for(let prod of request.user.products) {
-                    if(prod._id === scanned._id) {
+                for (let prod of request.user.products) {
+                    if (prod._id === scanned._id) {
                         product = prod;
                         break;
                     }
                 }
 
-                if(product === null) {
+                if (product === null) {
                     response.json({
                         success: false,
                         error: 'PRODUCT_NOT_SCANNED',
-                        msg: 'Paniek! Je kan geen punten krijgen voor dit product als het niet in je winkelmandje zit!'
+                        message: 'Paniek! Je kan geen punten krijgen voor dit product als het niet in je winkelmandje zit!'
                     });
                     return;
                 }
 
-                if(!product.bought) {
+                if (!product.bought) {
                     response.json({
                         success: false,
                         error: 'PRODUCT_NOT_UNLOCKED',
-                        msg: 'Paniek! Je kan geen punten krijgen voor dit product omdat je hem nog niet unlocked hebt.'
+                        message: 'Paniek! Je kan geen punten krijgen voor dit product omdat je hem nog niet unlocked hebt.'
                     });
                     return;
                 }
 
-                if(product.rewarded) {
+                if (product.rewarded) {
                     response.json({
                         success: false,
                         error: 'PRODUCT_ALREADY_REWARDED',
-                        msg: 'Hee! Je hebt al punten gekregen voor dit product!'
+                        message: 'Hee! Je hebt al punten gekregen voor dit product!'
                     });
                     return;
                 }
 
                 request.user.points += product.reward;
                 product.rewarded = true;
-                request.user.save();
-                response.json({
-                    success: true,
-                    data: request.user.getAllData()
+                request.user.save().then(() => {
+                    response.json({
+                        success: true,
+                        data: request.user.getAllData()
+                    })
+                }).catch(() => {
+                    response.json({
+                        success: false,
+                        error: 'UNKNOWN_ERROR',
+                        message: '2Er trad een onbekende fout op.'
+                    })
                 });
             }
         });
@@ -150,20 +164,27 @@ class Products extends Base {
                 response.json({
                     success: false,
                     error: 'CODE_UNKNOWN',
-                    msg: 'Helaas, deze code is ongeldig.'
+                    message: 'Helaas, deze code is ongeldig.'
                 });
             } else {
                 if (request.user.addReward(rewards[0])) {
-                    request.user.save();
-                    response.json({
-                        success: true,
-                        data: request.user.getAllData()
+                    request.user.save().then(() => {
+                        response.json({
+                            success: true,
+                            data: request.user.getAllData()
+                        })
+                    }).catch(() => {
+                        response.json({
+                            success: false,
+                            error: 'UNKNOWN_ERROR',
+                            message: '3Er trad een onbekende fout op.'
+                        })
                     });
                 } else {
                     response.json({
                         success: false,
                         error: 'REWARD_ALREADY_SCANNED',
-                        msg: 'Paniek! Je hebt deze reward al ontvangen.'
+                        message: 'Paniek! Je hebt deze reward al ontvangen.'
                     });
                 }
             }
@@ -177,49 +198,49 @@ class Products extends Base {
      * @param response
      */
     unlockProduct(request, input, response) {
-        if(input.action !== 'unlock') {
+        if (input.action !== 'unlock') {
             response.json({
                 success: false,
                 error: 'ACTION_UNKNOWN',
-                msg: 'Deze actie bestaat niet.'
+                message: 'Deze actie bestaat niet.'
             });
             return;
         }
 
         // verify that product is scanned
         let product = null;
-        for(let prod of request.user.products) {
-            if(prod._id === input.productId._id) {
+        for (let prod of request.user.products) {
+            if (prod._id === input.productId._id) {
                 product = prod;
                 break;
             }
         }
 
-        if(product === null) {
+        if (product === null) {
             response.json({
                 success: false,
                 error: 'PRODUCT_NOT_SCANNED',
-                msg: 'Je kan het product niet unlocken als je het nog niet gescand hebt.'
+                message: 'Je kan het product niet unlocken als je het nog niet gescand hebt.'
             });
             return;
         }
 
         // verify that product is not already unlocked
-        if(product.bought === true) {
+        if (product.bought === true) {
             response.json({
                 success: false,
                 error: 'PRODUCT_ALREADY_UNLOCKED',
-                msg: 'Je hebt dit product al unlocked, je hoeft niks te doen.'
+                message: 'Je hebt dit product al unlocked, je hoeft niks te doen.'
             });
             return;
         }
 
         // verify that group has enough credits
-        if(request.user.credits < product.costs) {
+        if (request.user.credits < product.costs) {
             response.json({
                 success: false,
                 error: 'NOT_ENOUGH_CREDITS',
-                msg: 'Je hebt niet genoeg actiepunten om dit product te unlocken.'
+                message: 'Je hebt niet genoeg actiepunten om dit product te unlocken.'
             });
             return;
         }
@@ -227,10 +248,17 @@ class Products extends Base {
         // unlock product
         product.bought = true;
         request.user.credits = request.user.credits - product.costs;
-        request.user.save();
-        response.json({
-            success: true,
-            data: request.user.products
+        request.user.save().then(() => {
+            response.json({
+                success: true,
+                data: request.user.getAllData()
+            });
+        }).catch(() => {
+            response.json({
+                success: false,
+                error: 'UNKNOWN_ERROR',
+                message: '4Er trad een onbekende fout op.'
+            })
         });
     }
 }

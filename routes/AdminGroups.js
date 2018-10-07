@@ -60,7 +60,7 @@ class AdminGroups extends Base {
         let filter = {};
         let groups = [];
         Group.findAll(filter, function (err, groupList) {
-            if (err) return response.status(400).send({msg: err});
+            if (err) return response.status(400).send({message: err});
 
             for (let gr of groupList) {
                 groups.push(gr.getAllData());
@@ -193,7 +193,7 @@ class AdminGroups extends Base {
                         return response.status(400).json({
                             success: false,
                             error: 'UPDATE_FAILED',
-                            msg: err
+                            message: err
                         });
                     }
 
@@ -205,14 +205,14 @@ class AdminGroups extends Base {
                 return response.status(400).json({
                     success: false,
                     error: 'UPDATE_FAILED',
-                    msg: 'An error occured during the update procedure. The name might be a duplicate'
+                    message: 'An error occured during the update procedure. The name might be a duplicate'
                 });
             });
         } else {
             return response.status(400).json({
                 success: false,
                 error: 'NOTHING_TO_UPDATE',
-                msg: 'No fields are marked for update'
+                message: 'No fields are marked for update'
             });
         }
     }
@@ -225,7 +225,7 @@ class AdminGroups extends Base {
      */
     deleteGroup(request, input, response) {
         input.groupId.remove();
-        response.send({msg: 'Delete succes!'});
+        response.send({message: 'Delete succes!'});
     }
 }
 

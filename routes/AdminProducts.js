@@ -60,7 +60,7 @@ class AdminProducts extends Base {
         var filter = {};
         var products = [];
         Product.findAll(filter, function (err, prodList) {
-            if (err) return response.status(400).send({msg: err});
+            if (err) return response.status(400).send({message: err});
 
             for (let prod of prodList) {
                 products.push(prod.getAllData());
@@ -151,11 +151,11 @@ class AdminProducts extends Base {
 
         input.productId.save(function (err, goal, numAffected) {
             if (err) {
-                response.status(400).send({msg: err});
+                response.status(400).send({message: err});
             } else if (numAffected <= 0) {
-                response.status(400).send({msg: 'Wrong id or data.'});
+                response.status(400).send({message: 'Wrong id or data.'});
             } else {
-                response.send({msg: 'Put succes!'});
+                response.send({message: 'Put succes!'});
             }
         });
     }
@@ -168,7 +168,7 @@ class AdminProducts extends Base {
      */
     deleteProduct(request, input, response) {
         input.productId.remove();
-        response.send({msg: 'Delete succes!'});
+        response.send({message: 'Delete succes!'});
     }
 }
 

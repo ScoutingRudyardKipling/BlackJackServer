@@ -26,6 +26,7 @@ class Groups extends Base {
     resolve() {
         // allow listing groups
         this.regRoute('get', '/', [], [], true).then(this.getGroups.bind(this));
+        this.regRoute('get', '/current', [], [], true).then(this.getCurrentGroup.bind(this));
 
     };
 
@@ -38,10 +39,10 @@ class Groups extends Base {
     getGroups(request, input, response) {
         var filter = {};
         var groups = [];
-        Group.findAll(filter, function(err, us){
-            if (err) return response.status(400).send({msg:err});
+        Group.findAll(filter, function (err, us) {
+            if (err) return response.status(400).send({message: err});
 
-            for(var index in us) {
+            for (var index in us) {
                 groups.push(us[index].getPublicData());
             }
 
@@ -53,6 +54,19 @@ class Groups extends Base {
                 data: groups
             });
         }.bind(this));
+    }
+
+    /**
+     *
+     * @param request
+     * @param input
+     * @param response
+     */
+    getCurrentGroup(request, input, response) {
+        return response.json({
+            success: true,
+            data: request.user.getAllData()
+        });
     }
 
 

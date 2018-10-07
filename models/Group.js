@@ -255,7 +255,7 @@ groupSchema.methods.updateTokenDate = function (token) {
     }
 
     // save in background
-    this.save();
+    return this.save();
 };
 
 /**
