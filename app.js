@@ -11,6 +11,7 @@ var GroupController = require('./routes/Groups');
 var ProductController = require('./routes/Products');
 var AdminProductController = require('./routes/AdminProducts');
 var AdminGroupController = require('./routes/AdminGroups');
+var AdminRewardsController = require('./routes/AdminRewards');
 var LocationController = require('./routes/Locations');
 
 
@@ -30,6 +31,7 @@ app.use('/groups', (new GroupController(app)).router);
 app.use('/products', (new ProductController(app)).router);
 app.use('/admin/products', (new AdminProductController(app)).router);
 app.use('/admin/groups', (new AdminGroupController(app)).router);
+app.use('/admin/rewards', (new AdminRewardsController(app)).router);
 app.use('/locations', (new LocationController(app)).router);
 
 // catch 404 and forward to error handler

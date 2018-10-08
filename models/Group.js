@@ -75,7 +75,11 @@ let groupSchema = new Schema({
             type: Number,
             required: true
         },
-        amount: {
+        code: {
+            type: String,
+            required: true
+        },
+        reward: {
             type: Number,
             required: true
         }
@@ -97,7 +101,7 @@ groupSchema.statics.findAll = function (filter, callback) {
  * @param callback
  */
 groupSchema.statics.findByID = function (id, callback) {
-    return this.find({ _id: id }, callback);
+    return this.find({_id: id}, callback);
 };
 
 
@@ -108,7 +112,7 @@ groupSchema.statics.findByID = function (id, callback) {
  * @returns {Query|*|FindOperatorsUnordered|FindOperatorsOrdered|Cursor|T}
  */
 groupSchema.statics.findByName = function (name, callback) {
-    return this.find({ name: name }, callback);
+    return this.find({name: name}, callback);
 };
 
 /**
@@ -263,8 +267,8 @@ groupSchema.methods.updateTokenDate = function (token) {
  * @param product Product
  */
 groupSchema.methods.addProduct = function (product) {
-    for(let prod of this.products) {
-        if(prod._id === product._id) {
+    for (let prod of this.products) {
+        if (prod._id === product._id) {
             return false;
         }
     }
@@ -289,8 +293,8 @@ groupSchema.methods.addProduct = function (product) {
  * @param reward Reward
  */
 groupSchema.methods.addReward = function (reward) {
-    for(let rew of this.rewards) {
-        if(rew._id === reward._id) {
+    for (let rew of this.rewards) {
+        if (rew._id === reward._id) {
             return false;
         }
     }
@@ -298,6 +302,7 @@ groupSchema.methods.addReward = function (reward) {
     // push reward
     this.rewards.push({
         _id: reward._id,
+        code: reward.code,
         reward: reward.reward
     });
 

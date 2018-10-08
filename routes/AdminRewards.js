@@ -3,10 +3,10 @@
 var Base = require('./Base');
 var express = require('express');
 var router = express.Router();
-var Product = require('../models/Product');
 var Reward = require('../models/Reward');
+var Product = require('../models/Product');
 
-class AdminProducts extends Base {
+class AdminRewards extends Base {
 
     /**
      * Authentication class
@@ -24,30 +24,30 @@ class AdminProducts extends Base {
      * Resolve routes
      */
     resolve() {
-        // allow listing products
+        // allow listing rewards
         this.regRoute('get', '/', [], [], true)
             .before(this.requireAuthAdmin)
-            .then(this.getProducts.bind(this));
+            .then(this.getRewards.bind(this));
 
-        // allow showing products
-        this.regRoute('get', '/:productId', ['productId'], [], true)
+        // allow showing rewards
+        this.regRoute('get', '/:rewardId', ['rewardId'], [], true)
             .before(this.requireAuthAdmin)
-            .then(this.getProduct.bind(this));
+            .then(this.getReward.bind(this));
 
-        // allow creating a product
-        this.regRoute('post', '/', ['name', 'code', 'rewardCode', 'image', 'costs', 'reward'], [], true)
+        // allow creating a rewards
+        this.regRoute('post', '/', ['reward', 'type', 'code'], [], true)
             .before(this.requireAuthAdmin)
-            .then(this.postProduct.bind(this));
+            .then(this.postReward.bind(this));
 
-        // allow updating product
-        this.regRoute('put', '/:productId', ['productId'], ['name', 'code', 'rewardCode', 'image', 'costs', 'reward'], true)
+        // allow updating reward
+        this.regRoute('put', '/:rewardId', ['rewardId'], ['reward', 'type', 'code'], true)
             .before(this.requireAuthAdmin)
-            .then(this.updateProduct.bind(this));
+            .then(this.updateReward.bind(this));
 
-        // allow deleting product
-        this.regRoute('delete', '/:productId', ['productId'], [], true)
+        // allow deleting rewards
+        this.regRoute('delete', '/:rewardId', ['rewardId'], [], true)
             .before(this.requireAuthAdmin)
-            .then(this.deleteProduct.bind(this));
+            .then(this.deleteReward.bind(this));
     };
 
     /**
@@ -56,19 +56,19 @@ class AdminProducts extends Base {
      * @param input
      * @param response
      */
-    getProducts(request, input, response) {
+    getRewards(request, input, response) {
         var filter = {};
-        var products = [];
-        Product.findAll(filter, function (err, prodList) {
+        var rewards = [];
+        Reward.findAll(filter, function (err, rewList) {
             if (err) return response.status(400).send({message: err});
 
-            for (let prod of prodList) {
-                products.push(prod.getAllData());
+            for (let rew of rewList) {
+                rewards.push(rew.getAllData());
             }
 
             response.json({
                 filter: filter,
-                data: products
+                data: rewards
             });
         });
     }
@@ -79,36 +79,28 @@ class AdminProducts extends Base {
      * @param input
      * @param response
      */
-    postProduct(request, input, response) {
-        if(input['code'] === input['rewardCode']) {
-            response.status(409).json({
-                success: false,
-                message: 'codes cant be equal!'
+    postReward(request, input, response) {
+        if(input['type'] !== 'actionpoint' && input['type'] !== 'point') {
+            return response.status(500).json({
+                error: "Kies een degelijk type anders",
+                success: false
             });
-            return;
         }
 
         Promise.all([
             Reward.promiseCodeIsUnique(input['code']),
-            Reward.promiseCodeIsUnique(input['rewardCode']),
             Product.promiseCodeIsUnique(input['code']),
-            Product.promiseCodeIsUnique(input['rewardCode']),
-            Product.promiseRewardCodeIsUnique(input['code']),
-            Product.promiseRewardCodeIsUnique(input['rewardCode'])
+            Product.promiseRewardCodeIsUnique(input['code'])
         ]).then(function () {
             // both codes are unique
-            let product = new Product({
-                name: input['name'],
+            let reward = new Reward({
                 code: input['code'],
-                rewardCode: input['rewardCode'],
-                image: input['image'],
-                costs: input['costs'],
-                reward: input['reward']
+                reward: input['reward'],
+                type: input['type'],
             });
 
-            product.save(function (err) {
+            reward.save(function (err) {
                 if (err) {
-                    console.log(err);
                     return response.status(500).json({
                         error: err,
                         success: false
@@ -134,8 +126,8 @@ class AdminProducts extends Base {
      * @param response
      * @returns {*}
      */
-    getProduct(request, input, response) {
-        return response.json(input.productId.getPublicData());
+    getReward(request, input, response) {
+        return response.json(input.rewardId.getAllData());
     }
 
     /**
@@ -144,14 +136,21 @@ class AdminProducts extends Base {
      * @param input
      * @param response
      */
-    updateProduct(request, input, response) {
+    updateReward(request, input, response) {
+        if(input.hasOwnProperty('type') && (input['type'] !== 'actionpoint' && input['type'] !== 'point')) {
+            return response.status(500).json({
+                error: "Kies een degelijk type anders",
+                success: false
+            });
+        }
+
         for (var i in input) {
-            if (i !== 'productId' && input[i] !== null && input[i] !== undefined) {
-                input.productId[i] = input[i];
+            if (i !== 'rewardId' && input[i] !== null && input[i] !== undefined) {
+                input.rewardId[i] = input[i];
             }
         }
 
-        input.productId.save(function (err, goal, numAffected) {
+        input.rewardId.save(function (err, goal, numAffected) {
             if (err) {
                 response.status(400).send({message: err});
             } else if (numAffected <= 0) {
@@ -168,10 +167,10 @@ class AdminProducts extends Base {
      * @param input
      * @param response
      */
-    deleteProduct(request, input, response) {
-        input.productId.remove();
+    deleteReward(request, input, response) {
+        input.rewardId.remove();
         response.send({message: 'Delete succes!'});
     }
 }
 
-module.exports = AdminProducts;
+module.exports = AdminRewards;

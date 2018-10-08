@@ -6,7 +6,8 @@ let passport = require('../lib/passport');
 const MiddlewareBuilder = require('../lib/middlewarebuilder');
 let models = {
     groupId: require('../models/Group'),
-    productId: require('../models/Product')
+    productId: require('../models/Product'),
+    rewardId: require('../models/Reward')
 };
 
 class Base {

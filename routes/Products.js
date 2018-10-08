@@ -4,7 +4,7 @@ var Base = require('./Base');
 var express = require('express');
 var router = express.Router();
 var Product = require('../models/Product');
-const ArrayIntersect = require('array-intersection');
+var Reward = require('../models/Reward');
 
 class Products extends Base {
 
@@ -63,7 +63,11 @@ class Products extends Base {
                     request.user.save().then(() => {
                         response.json({
                             success: true,
-                            data: request.user.getAllData()
+                            data: {
+                                groupInfo: request.user.getAllData(),
+                                productId: products[0]._id,
+                                type: "product"
+                            }
                         })
                     }).catch((e) => {
                         response.json({
@@ -138,7 +142,11 @@ class Products extends Base {
                 request.user.save().then(() => {
                     response.json({
                         success: true,
-                        data: request.user.getAllData()
+                        data: {
+                            groupInfo: request.user.getAllData(),
+                            message: "Nice, zojuist " + product.reward + " punten verdient voor deze " + product.name,
+                            type: "product_reward"
+                        }
                     })
                 }).catch(() => {
                     response.json({
@@ -159,7 +167,7 @@ class Products extends Base {
      * @returns {*}
      */
     postReward(request, input, response) {
-        Product.findByCode(input['code'], function (error, rewards) {
+        Reward.findByCode(input['code'], function (error, rewards) {
             if (error || rewards.length === 0) {
                 response.json({
                     success: false,
@@ -168,10 +176,22 @@ class Products extends Base {
                 });
             } else {
                 if (request.user.addReward(rewards[0])) {
+                    var message = "";
+                    if (rewards[0].type === 'point') {
+                        request.user.points += rewards[0].reward;
+                        message = "Yes! Je hebt er " + rewards[0].reward + " punten bij gekregen. Je hebt nu " + request.user.points + " punten en " + request.user.credits + " actiepunten.";
+                    } else if (rewards[0].type === 'actionpoint') {
+                        request.user.credits += rewards[0].reward;
+                        message = "Yes! Je hebt er " + rewards[0].reward + " actiepunten bij gekregen. Je hebt nu " + request.user.points + " punten en " + request.user.credits + " actiepunten.";
+                    }
                     request.user.save().then(() => {
                         response.json({
                             success: true,
-                            data: request.user.getAllData()
+                            data: {
+                                groupInfo: request.user.getAllData(),
+                                message: message,
+                                type: "points"
+                            }
                         })
                     }).catch(() => {
                         response.json({
