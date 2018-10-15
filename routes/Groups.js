@@ -28,6 +28,8 @@ class Groups extends Base {
         this.regRoute('get', '/', [], [], true).then(this.getGroups.bind(this));
         this.regRoute('get', '/current', [], [], true).then(this.getCurrentGroup.bind(this));
 
+        // register fcm token
+        this.regRoute('post', '/current/fcm', ['token'], [], true).then(this.postFCMToken.bind(this));
     };
 
     /**
@@ -51,7 +53,8 @@ class Groups extends Base {
 
             response.json({
                 filter: filter,
-                data: groups
+                data: {scores:groups},
+                success: true
             });
         }.bind(this));
     }
@@ -67,6 +70,31 @@ class Groups extends Base {
             success: true,
             data: request.user.getAllData()
         });
+    }
+
+    /**
+     * Submit credentials in order to login
+     * @param request
+     * @param input
+     * @param response
+     */
+    postFCMToken(request, input, response) {
+        let group = request.user;
+        let fcm = input['token'];
+
+        if(group.FCMTokens.indexOf(fcm) > -1) {
+            response.json({
+                success: false,
+                message: "Token wordt al gebruikt"
+            });
+        } else {
+            group.FCMTokens.push(fcm);
+            group.save();
+            response.json({
+                success: true,
+                data: {}
+            });
+        }
     }
 
 

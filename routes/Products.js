@@ -5,6 +5,7 @@ var express = require('express');
 var router = express.Router();
 var Product = require('../models/Product');
 var Reward = require('../models/Reward');
+const fcm = require('../lib/fcm');
 
 class Products extends Base {
 
@@ -61,6 +62,7 @@ class Products extends Base {
             } else {
                 if (request.user.addProduct(products[0])) {
                     request.user.save().then(() => {
+                        fcm.sendNewProduct(products[0], request.user);
                         response.json({
                             success: true,
                             data: {
@@ -68,7 +70,7 @@ class Products extends Base {
                                 productId: products[0]._id,
                                 type: "product"
                             }
-                        })
+                        });
                     }).catch((e) => {
                         response.json({
                             success: false,
@@ -140,6 +142,8 @@ class Products extends Base {
                 request.user.points += product.reward;
                 product.rewarded = true;
                 request.user.save().then(() => {
+                    fcm.sendUpdateProduct(product, request.user);
+                    fcm.sendUpdateGroupProperty("points", request.user.points, request.user);
                     response.json({
                         success: true,
                         data: {
@@ -147,12 +151,12 @@ class Products extends Base {
                             message: "Nice, zojuist " + product.reward + " punten verdient voor deze " + product.name,
                             type: "product_reward"
                         }
-                    })
+                    });
                 }).catch(() => {
                     response.json({
                         success: false,
                         error: 'UNKNOWN_ERROR',
-                        message: '2Er trad een onbekende fout op.'
+                        message: 'Er trad een onbekende fout op.'
                     })
                 });
             }
@@ -185,6 +189,8 @@ class Products extends Base {
                         message = "Yes! Je hebt er " + rewards[0].reward + " actiepunten bij gekregen. Je hebt nu " + request.user.points + " punten en " + request.user.credits + " actiepunten.";
                     }
                     request.user.save().then(() => {
+                        fcm.sendUpdateGroupProperty("points", request.user.points, request.user);
+                        fcm.sendUpdateGroupProperty("credits", request.user.credits, request.user);
                         response.json({
                             success: true,
                             data: {
@@ -192,7 +198,7 @@ class Products extends Base {
                                 message: message,
                                 type: "points"
                             }
-                        })
+                        });
                     }).catch(() => {
                         response.json({
                             success: false,
@@ -269,6 +275,8 @@ class Products extends Base {
         product.bought = true;
         request.user.credits = request.user.credits - product.costs;
         request.user.save().then(() => {
+            fcm.sendUpdateProduct(product, request.user);
+            fcm.sendUpdateGroupProperty("credits", request.user.credits, request.user);
             response.json({
                 success: true,
                 data: request.user.getAllData()

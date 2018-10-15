@@ -14,7 +14,6 @@ var AdminGroupController = require('./routes/AdminGroups');
 var AdminRewardsController = require('./routes/AdminRewards');
 var LocationController = require('./routes/Locations');
 
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');

@@ -83,7 +83,8 @@ let groupSchema = new Schema({
             type: Number,
             required: true
         }
-    }]
+    }],
+    FCMTokens: [String]
 });
 
 /**
