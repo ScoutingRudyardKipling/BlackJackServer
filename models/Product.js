@@ -9,6 +9,10 @@ let productSchema = new Schema({
         type: String,
         required: true
     },
+    description: {
+        type: String,
+        required: true
+    },
     code: {
         type: String,
         required: true
@@ -149,6 +153,7 @@ productSchema.methods.getAllData = function () {
     return {
         _id: this._id,
         name: this.name,
+        description: this.description,
         code: this.code,
         rewardCode: this.rewardCode,
         image: this.image,

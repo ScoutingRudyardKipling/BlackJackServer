@@ -35,12 +35,12 @@ class AdminProducts extends Base {
             .then(this.getProduct.bind(this));
 
         // allow creating a product
-        this.regRoute('post', '/', ['name', 'code', 'rewardCode', 'image', 'costs', 'reward'], [], true)
+        this.regRoute('post', '/', ['name', 'description', 'code', 'rewardCode', 'image', 'costs', 'reward'], [], true)
             .before(this.requireAuthAdmin)
             .then(this.postProduct.bind(this));
 
         // allow updating product
-        this.regRoute('put', '/:productId', ['productId'], ['name', 'code', 'rewardCode', 'image', 'costs', 'reward'], true)
+        this.regRoute('put', '/:productId', ['productId'], ['name', 'description', 'code', 'rewardCode', 'image', 'costs', 'reward'], true)
             .before(this.requireAuthAdmin)
             .then(this.updateProduct.bind(this));
 
@@ -99,6 +99,7 @@ class AdminProducts extends Base {
             // both codes are unique
             let product = new Product({
                 name: input['name'],
+                description: input['description'],
                 code: input['code'],
                 rewardCode: input['rewardCode'],
                 image: input['image'],

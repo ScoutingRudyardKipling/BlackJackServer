@@ -50,27 +50,29 @@ class Auth extends Base {
     postLogin(request, input, response, next) {
 
         // let rk = new Group({
-        //     name: 'rudyardkipling',
+        //     name: 'admin',
         //     token: '',
         //     type: 'administrator',
         //     group: 'Scouting Rudyard Kipling'
         // });
         //
-        // rk.setPassword('test', function (err) {
+        // rk.setPassword('zoetapoetaHuppeldepup', function (err) {
         //     rk.save(function (err) {
         //         if (err) {
         //             console.log(err);
-        //             // return response.status(500).json({
-        //             //     error: err,
-        //             //     success: false
-        //             // });
+        //             return response.status(500).json({
+        //                 error: err,
+        //                 success: false
+        //             });
         //         }
         //
-        //         // response.json({
-        //         //     success: true
-        //         // });
+        //         response.json({
+        //             success: true
+        //         });
         //     });
         // });
+        //
+        // return;
 
 
         passport.authenticate('local', function (e, group, error, something) {

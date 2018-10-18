@@ -37,6 +37,10 @@ let groupSchema = new Schema({
             type: String,
             required: true
         },
+        description: {
+            type: String,
+            required: true
+        },
         code: {
             type: String,
             required: true
@@ -278,6 +282,7 @@ groupSchema.methods.addProduct = function (product) {
     this.products.push({
         _id: product._id,
         name: product.name,
+        description: product.description,
         image: product.image,
         costs: product.costs,
         reward: product.reward,
