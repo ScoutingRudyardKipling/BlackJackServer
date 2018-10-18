@@ -139,25 +139,50 @@ class Products extends Base {
                     return;
                 }
 
-                request.user.points += product.reward;
-                product.rewarded = true;
-                request.user.save().then(() => {
-                    fcm.sendUpdateProduct(product, request.user);
-                    fcm.sendUpdateGroupProperty("points", request.user.points, request.user);
-                    response.json({
-                        success: true,
-                        data: {
-                            groupInfo: request.user.getAllData(),
-                            message: "Nice, zojuist " + product.reward + " punten verdient voor deze " + product.name,
-                            type: "product_reward"
+                // check for bonus
+                Product.findOne({
+                    _id: product._id
+                }, function (error, originalProduct) {
+                    let bonus = false;
+                    if (error || !originalProduct) {
+
+                    } else {
+                        if(originalProduct !== null && originalProduct !== undefined && originalProduct.bonus === true) {
+                            bonus = true;
                         }
+                    }
+
+                    request.user.points += bonus ? 2 * product.reward : product.reward;
+                    product.rewarded = true;
+                    request.user.save().then(() => {
+                        fcm.sendUpdateProduct(product, request.user);
+                        fcm.sendUpdateGroupProperty("points", request.user.points, request.user);
+                        if(bonus) {
+                            response.json({
+                                success: true,
+                                data: {
+                                    groupInfo: request.user.getAllData(),
+                                    message: "Nice, deze " + product.name + " was in de bonus, dus je krijgt de bonus van " + product.reward + " punten twee maal!! Lekker bezig pik!",
+                                    type: "product_reward"
+                                }
+                            });
+                        } else {
+                            response.json({
+                                success: true,
+                                data: {
+                                    groupInfo: request.user.getAllData(),
+                                    message: "Nice, zojuist " + product.reward + " punten verdient voor deze " + product.name,
+                                    type: "product_reward"
+                                }
+                            });
+                        }
+                    }).catch(() => {
+                        response.json({
+                            success: false,
+                            error: 'UNKNOWN_ERROR',
+                            message: 'Er trad een onbekende fout op.'
+                        })
                     });
-                }).catch(() => {
-                    response.json({
-                        success: false,
-                        error: 'UNKNOWN_ERROR',
-                        message: 'Er trad een onbekende fout op.'
-                    })
                 });
             }
         });

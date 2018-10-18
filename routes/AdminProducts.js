@@ -40,7 +40,7 @@ class AdminProducts extends Base {
             .then(this.postProduct.bind(this));
 
         // allow updating product
-        this.regRoute('put', '/:productId', ['productId'], ['name', 'description', 'code', 'rewardCode', 'image', 'costs', 'reward'], true)
+        this.regRoute('put', '/:productId', ['productId'], ['name', 'description', 'code', 'rewardCode', 'image', 'costs', 'reward', 'bonus'], true)
             .before(this.requireAuthAdmin)
             .then(this.updateProduct.bind(this));
 
@@ -104,7 +104,8 @@ class AdminProducts extends Base {
                 rewardCode: input['rewardCode'],
                 image: input['image'],
                 costs: input['costs'],
-                reward: input['reward']
+                reward: input['reward'],
+                bonus: input['bonus']
             });
 
             product.save(function (err) {

@@ -33,6 +33,11 @@ let productSchema = new Schema({
         type: Number,
         required: true
     },
+    bonus: {
+        type: Boolean,
+        required: false,
+        default: false
+    }
 });
 
 /**
@@ -158,7 +163,8 @@ productSchema.methods.getAllData = function () {
         rewardCode: this.rewardCode,
         image: this.image,
         costs: this.costs,
-        reward: this.reward
+        reward: this.reward,
+        bonus: this.bonus
     };
 };
 
