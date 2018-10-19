@@ -56,6 +56,7 @@ class Products extends Base {
      */
     postProduct(request, input, response) {
         let self = this;
+        input['code'] = input['code'].toUpperCase();
         Product.findByCode(input['code'], function (error, products) {
             if (error || products.length === 0) {
                 self.postRewardProduct(request, input, response);

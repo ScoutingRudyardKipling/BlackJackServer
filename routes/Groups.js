@@ -39,12 +39,24 @@ class Groups extends Base {
      * @param response
      */
     getGroups(request, input, response) {
+        if((new Date()).getHours() < 19) {
+            response.json({
+                filter: {},
+                data: {scores:[]},
+                success: true
+            });
+            return;
+        }
+
         var filter = {};
         var groups = [];
         Group.findAll(filter, function (err, us) {
             if (err) return response.status(400).send({message: err});
 
             for (var index in us) {
+                if(us[index].name === 'admin') {
+                    continue;
+                }
                 groups.push(us[index].getPublicData());
             }
 
