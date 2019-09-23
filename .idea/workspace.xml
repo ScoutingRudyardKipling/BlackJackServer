@@ -3,6 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="0d404ed6-3b26-4d01-acf5-55a4ad96fb80" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/fcm.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/fcm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/Group.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/Group.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/AdminGroups.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/AdminGroups.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/Products.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/Products.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -78,7 +82,7 @@
       <workItem from="1539616837011" duration="26214000" />
       <workItem from="1539899933197" duration="815000" />
       <workItem from="1539930728464" duration="1651000" />
-      <workItem from="1569265872107" duration="2684000" />
+      <workItem from="1569265872107" duration="4282000" />
     </task>
     <servers />
   </component>
