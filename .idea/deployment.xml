@@ -5,7 +5,7 @@
       <paths name="engency.com">
         <serverdata>
           <mappings>
-            <mapping deploy="/public/blackjack.engency.com" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/public/rkjota.engency.com" local="$PROJECT_DIR$" web="/" />
           </mappings>
           <excludedPaths>
             <excludedPath path="/public/blackjack.engency.com/node_modules" />

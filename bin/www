@@ -13,7 +13,7 @@ var fs = require('fs');
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || '4000');
 app.set('port', port);
 
 /**
@@ -24,7 +24,7 @@ var sslConfig = {
     key: fs.readFileSync('/etc/letsencrypt/live/blackjack.engency.com/privkey.pem'),
     cert: fs.readFileSync('/etc/letsencrypt/live/blackjack.engency.com/fullchain.pem'),
     ssl: true,
-    port: 3000,
+    port: 4000,
     ciphers: 'ALL:!ADH:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!3DES:!MD5:!PSK:+HIGH:+MEDIUM:-LOW:-SSLv2:-EXP',
     honorCipherOrder: true
 };

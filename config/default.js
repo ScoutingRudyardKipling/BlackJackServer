@@ -3,8 +3,8 @@ module.exports = {
     encryption: 'none',
     mongodb: {
         host: 'localhost:27017',
-        name: 'black18jack',
-        password: 'jijmijnwachtwoordstelenswa?',
-        database: 'blackjack'
+        name: 'jota19',
+        password: 'manmanmangewooneengestolenwachtwoordineens!',
+        database: 'jota19'
     }
 };

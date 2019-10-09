@@ -41,7 +41,7 @@ BlackJack.prototype = {
         }
 
         // open connection
-        this._socket = io('wss://blackjack.engency.com:3000');
+        this._socket = io('wss://blackjack.engency.com:4000');
         this._socket.on('connect', this._onConnect.bind(this));
 
         // bind listeners
