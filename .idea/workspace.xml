@@ -2,11 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0d404ed6-3b26-4d01-acf5-55a4ad96fb80" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/webServers.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/webServers.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/fcm.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/fcm.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/Group.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/Group.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/AdminGroups.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/AdminGroups.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/Products.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/Products.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/AdminProducts.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/AdminProducts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/Auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/Auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/Base.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/Base.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/Groups.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/Groups.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -26,17 +28,12 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="y" value="-2" />
-    <option name="width" value="1920" />
-    <option name="height" value="1082" />
-  </component>
   <component name="ProjectId" id="1RFbbmcfmLhko5GbCIGrZRnOOQi" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="javascript.nodejs.core.library.configured.version" value="6.9.5" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/node_modules" />
+    <property name="javascript.nodejs.core.library.configured.version" value="8.9.0" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -94,7 +91,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>

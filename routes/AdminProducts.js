@@ -5,6 +5,8 @@ var express = require('express');
 var router = express.Router();
 var Product = require('../models/Product');
 var Reward = require('../models/Reward');
+let Group = require('../models/Group');
+const fcm = require('../lib/fcm');
 
 class AdminProducts extends Base {
 
@@ -43,6 +45,11 @@ class AdminProducts extends Base {
         this.regRoute('put', '/:productId', ['productId'], ['name', 'description', 'code', 'rewardCode', 'image', 'costs', 'reward', 'bonus'], true)
             .before(this.requireAuthAdmin)
             .then(this.updateProduct.bind(this));
+
+        // allow releasing product
+        this.regRoute('put', '/release/:productId', ['productId'], ['name', 'description', 'code', 'rewardCode', 'image', 'costs', 'reward', 'bonus'], true)
+            .before(this.requireAuthAdmin)
+            .then(this.releaseProduct.bind(this));
 
         // allow deleting product
         this.regRoute('delete', '/:productId', ['productId'], [], true)
@@ -161,6 +168,34 @@ class AdminProducts extends Base {
             } else {
                 response.send({message: 'Put succes!'});
             }
+        });
+    }
+
+    /**
+     *
+     * @param request
+     * @param input
+     * @param response
+     */
+    releaseProduct(request, input, response) {
+        const product = input.productId;
+
+        Group.findAll({}, function (err, groupList) {
+            if (err) return response.status(400).send({message: err});
+
+            let count = 0;
+            for (let group of groupList) {
+                if(group.addProduct(product)) {
+                    count++;
+                    group.save().then(() => {
+                        fcm.sendNewProduct(product, group);
+                    }).catch((e) => {
+                        console.log('an error occurred during the release of ' + product.name + ' for ' + group.name);
+                    });
+                }
+            }
+
+            response.json({success: true, count: count});
         });
     }
 

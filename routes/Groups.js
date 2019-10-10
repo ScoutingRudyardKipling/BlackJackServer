@@ -39,7 +39,7 @@ class Groups extends Base {
      * @param response
      */
     getGroups(request, input, response) {
-        if((new Date()).getHours() < 19) {
+        if((new Date()).getHours() < 7) {
             response.json({
                 filter: {},
                 data: {scores:[]},

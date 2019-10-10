@@ -3,7 +3,7 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="7e1e2e8e-7dee-4d18-8504-11c685378898" name="engency.com" url="http://engency.com">
-        <fileTransfer host="engency.com" port="22" rootFolder="/home/frank" accessType="SFTP" authAgent="true">
+        <fileTransfer host="engency.com" port="22" privateKey="$USER_HOME$/.ssh/id_rsa" rootFolder="/home/frank" accessType="SFTP" keyPair="true">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" shareSSLContext="true" />
           </advancedOptions>
