@@ -299,7 +299,9 @@ class Products extends Base {
 
         // unlock product
         product.bought = true;
+        product.rewarded = true;
         request.user.credits = request.user.credits - product.costs;
+        request.user.points = request.user.points + product.reward;
         request.user.save().then(() => {
             fcm.sendUpdateProduct(product, request.user);
             fcm.sendUpdateGroupProperty("credits", request.user.credits, request.user);

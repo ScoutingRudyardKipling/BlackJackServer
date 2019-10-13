@@ -299,12 +299,6 @@ groupSchema.methods.addProduct = function (product) {
  * @param reward Reward
  */
 groupSchema.methods.addReward = function (reward) {
-    for (let rew of this.rewards) {
-        if (rew._id === reward._id) {
-            return false;
-        }
-    }
-
     // push reward
     this.rewards.push({
         _id: reward._id,

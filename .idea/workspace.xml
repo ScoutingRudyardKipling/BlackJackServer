@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0d404ed6-3b26-4d01-acf5-55a4ad96fb80" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/AdminProducts.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/AdminProducts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/Group.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/Group.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/Products.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/Products.js" afterDir="false" />
     </list>
     <list id="5178d68f-dc36-42c5-831d-69553023bf38" name="Revert &quot;Removed credits system&quot;" comment="Revert &quot;Removed credits system&quot;&#10;&#10;This reverts commit b89b7f13" />
