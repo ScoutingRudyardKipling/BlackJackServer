@@ -209,10 +209,10 @@ class Products extends Base {
                     var message = "";
                     if (rewards[0].type === 'point') {
                         request.user.points += rewards[0].reward;
-                        message = "Yes! Je hebt er " + rewards[0].reward + " punten bij gekregen. Je hebt nu " + request.user.points + " punten en " + request.user.credits + " actiepunten.";
+                        message = "Yes! Je hebt er " + rewards[0].reward + " punten bij gekregen. Je hebt nu " + request.user.points + " punten en " + request.user.credits + " dollar.";
                     } else if (rewards[0].type === 'actionpoint') {
                         request.user.credits += rewards[0].reward;
-                        message = "Yes! Je hebt er " + rewards[0].reward + " actiepunten bij gekregen. Je hebt nu " + request.user.points + " punten en " + request.user.credits + " actiepunten.";
+                        message = "Yes! Je hebt er " + rewards[0].reward + " dollar bij gekregen. Je hebt nu " + request.user.points + " punten en " + request.user.credits + " dollar.";
                     }
                     request.user.save().then(() => {
                         fcm.sendUpdateGroupProperty("points", request.user.points, request.user);
@@ -292,7 +292,7 @@ class Products extends Base {
             response.json({
                 success: false,
                 error: 'NOT_ENOUGH_CREDITS',
-                message: 'Je hebt niet genoeg actiepunten om dit product te unlocken.'
+                message: 'Je hebt niet genoeg dollars om dit product te kopen.'
             });
             return;
         }
