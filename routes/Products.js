@@ -212,6 +212,7 @@ class Products extends Base {
                         message = "Yes! Je hebt er " + rewards[0].reward + " punten bij gekregen. Je hebt nu " + request.user.points + " punten en " + request.user.credits + " dollar.";
                     } else if (rewards[0].type === 'actionpoint') {
                         request.user.credits += rewards[0].reward;
+                        request.user.points += rewards[0].reward;
                         message = "Yes! Je hebt er " + rewards[0].reward + " dollar bij gekregen. Je hebt nu " + request.user.points + " punten en " + request.user.credits + " dollar.";
                     }
                     request.user.save().then(() => {
@@ -301,7 +302,6 @@ class Products extends Base {
         product.bought = true;
         product.rewarded = true;
         request.user.credits = request.user.credits - product.costs;
-        request.user.points = request.user.points + product.reward;
         request.user.save().then(() => {
             fcm.sendUpdateProduct(product, request.user);
             fcm.sendUpdateGroupProperty("credits", request.user.credits, request.user);
