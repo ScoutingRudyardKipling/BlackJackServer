@@ -57,12 +57,20 @@ let groupSchema = new Schema({
             type: Number,
             required: true
         },
+        bought: {
+            type: Boolean,
+            default: false
+        },
         rewarded: {
             type: Boolean,
             default: false
         },
     }],
     points: {
+        type: Number,
+        default: 0
+    },
+    credits: {
         type: Number,
         default: 0
     },
@@ -279,6 +287,7 @@ groupSchema.methods.addProduct = function (product) {
         costs: product.costs,
         reward: product.reward,
         code: product.code,
+        bought: false,
         rewarded: false
     });
 
@@ -316,6 +325,7 @@ groupSchema.methods.getAllData = function () {
         name: this.name,
         group: this.group,
         points: this.points,
+        credits: this.credits,
         products: this.products,
         rewards: this.rewards
     };
