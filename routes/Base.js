@@ -138,6 +138,7 @@ class Base {
         for (var i in required) {
             let value = this._getField(req, required[i]);
             if (!value) {
+                console.log(required[i], this._getField(req, required[i]));
                 return false;
             }
 
