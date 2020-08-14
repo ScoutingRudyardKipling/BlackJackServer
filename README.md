@@ -11,7 +11,7 @@ Server [Repo](https://github.com/ScoutingRudyardKipling/BlackJackServer)
 [![CircleCI](https://circleci.com/gh/ScoutingRudyardKipling/BlackJackServer/tree/master.svg?style=shield&circle-token=3a2d09cb6aade9626d38414ef910b775c5cf5e06)](https://app.circleci.com/pipelines/github/ScoutingRudyardKipling/BlackJackServer)
 ![Heroku](https://heroku-badge.herokuapp.com/?app=blackjackeindhoven)
 
-Client/app [Repo](https://github.com/ScoutingRudyardKipling/BlackJack2018_client)
+Client/app [Repo](https://github.com/ScoutingRudyardKipling/BlackJackClient)
 
 ## Contributing
 
