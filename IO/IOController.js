@@ -9,7 +9,7 @@ var IOController = class IOController {
 
     newConnection(socket) {
         console.log("new socketio connection");
-        socket.emit('Welkom op de BlackJack 2018 websocket verbinding. Je bent geabonneerd op de highscores.');
+        socket.emit('Welkom op de BlackJack websocket verbinding. Je bent geabonneerd op de highscores.');
         socket.join('highscores');
 
         socket.on('group', function (id) {

@@ -46,35 +46,7 @@ class Auth extends Base {
      * @param input
      * @param response
      */
-    // postLogin(request, input, response) {
     postLogin(request, input, response, next) {
-
-        // let rk = new Group({
-        //     name: 'admin',
-        //     token: '',
-        //     type: 'administrator',
-        //     group: 'Scouting Rudyard Kipling'
-        // });
-        //
-        // rk.setPassword('zoetapoetaHuppeldepup', function (err) {
-        //     rk.save(function (err) {
-        //         if (err) {
-        //             console.log(err);
-        //             return response.status(500).json({
-        //                 error: err,
-        //                 success: false
-        //             });
-        //         }
-        //
-        //         response.json({
-        //             success: true
-        //         });
-        //     });
-        // });
-        //
-        // return;
-
-
         passport.authenticate('local', function (e, group, error, something) {
             if (error) {
                 return response.json({
@@ -106,6 +78,31 @@ class Auth extends Base {
      */
     getCurrentUser(request, input, response) {
         response.json(request.user.getAllData());
+    }
+
+    /**
+     *
+     * @param id
+     * @param password
+     */
+    changePasswordForUserId(response, id, password) {
+        Group.findOne({_id: id}, function (err, user) {
+            user.setPassword(password, function (err) {
+                user.save(function (err) {
+                    if (err) {
+                        console.log(err);
+                        return response.status(500).json({
+                            error: err,
+                            success: false
+                        });
+                    }
+
+                    response.json({
+                        success: true
+                    });
+                });
+            });
+        });
     }
 }
 
