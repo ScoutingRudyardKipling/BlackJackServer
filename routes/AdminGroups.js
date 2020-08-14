@@ -40,7 +40,7 @@ class AdminGroups extends Base {
             .then(this.postGroup.bind(this));
 
         // allow updating groups
-        this.regRoute('put', '/:groupId', ['groupId'], ['password', 'name', 'group', 'type', 'credits', 'points'], true)
+        this.regRoute('put', '/:groupId', ['groupId'], ['password', 'name', 'group', 'type', 'points'], true)
             .before(this.requireAuthAdmin)
             .then(this.updateGroup.bind(this));
 
@@ -107,8 +107,7 @@ class AdminGroups extends Base {
                 type: input['type'],
                 products: [],
                 rewards: [],
-                points: 0,
-                credits: 0
+                points: 0
             });
 
             group.setPassword(input['password'], function (err) {
@@ -152,7 +151,7 @@ class AdminGroups extends Base {
 
         var promises = [];
         let group = input.groupId;
-        var simpleModifications = ArrayIntersect(Object.keys(input), ['group', 'credits', 'points']);
+        var simpleModifications = ArrayIntersect(Object.keys(input), ['group', 'points']);
         var updatingname = (input.name !== undefined && input.name !== group.name);
 
         if (updatingname) {

@@ -21,9 +21,9 @@ app.set('port', port);
  */
 
 var sslConfig = {
-    key: fs.readFileSync('/etc/letsencrypt/live/blackjack.engency.com/privkey.pem'),
-    cert: fs.readFileSync('/etc/letsencrypt/live/blackjack.engency.com/fullchain.pem'),
-    ssl: true,
+    // key: fs.readFileSync('/etc/letsencrypt/live/blackjack.engency.com/privkey.pem'),
+    // cert: fs.readFileSync('/etc/letsencrypt/live/blackjack.engency.com/fullchain.pem'),
+    ssl: false,
     port: 3000,
     ciphers: 'ALL:!ADH:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!3DES:!MD5:!PSK:+HIGH:+MEDIUM:-LOW:-SSLv2:-EXP',
     honorCipherOrder: true

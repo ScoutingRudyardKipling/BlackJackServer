@@ -39,7 +39,8 @@ class Groups extends Base {
      * @param response
      */
     getGroups(request, input, response) {
-        if((new Date()).getHours() < 19) {
+        const hour = (new Date()).getHours();
+        if(hour > 20 || hour < 1) {
             response.json({
                 filter: {},
                 data: {scores:[]},
@@ -54,7 +55,7 @@ class Groups extends Base {
             if (err) return response.status(400).send({message: err});
 
             for (var index in us) {
-                if(us[index].name === 'admin') {
+                if(us[index].type === 'administrator') {
                     continue;
                 }
                 groups.push(us[index].getPublicData());
