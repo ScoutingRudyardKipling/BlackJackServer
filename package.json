@@ -10,6 +10,7 @@
     "cookie-parser": "^1.4.5",
     "debug": "~4.1.1",
     "express": "^4.17.1",
+    "fcm-node": "^1.5.2",
     "file-system": "^2.2.2",
     "jade": "^1.11.0",
     "mongodb": "^3.6.0",
