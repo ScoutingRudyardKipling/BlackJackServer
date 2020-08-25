@@ -4,7 +4,6 @@ var Base = require('./Base');
 var express = require('express');
 var router = express.Router();
 var Group = require('../models/Group');
-const ArrayIntersect = require('array-intersection');
 
 class Groups extends Base {
 

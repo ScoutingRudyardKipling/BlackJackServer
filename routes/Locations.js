@@ -4,7 +4,6 @@ var Base = require('./Base');
 var express = require('express');
 var router = express.Router();
 var Location = require('../models/Location');
-const ArrayIntersect = require('array-intersection');
 
 class Locations extends Base {
 

@@ -11,16 +11,16 @@
     "debug": "~4.1.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "fcm-node": "^1.5.2",
     "file-system": "^2.2.2",
-    "jade": "^1.11.0",
+    "firebase-admin": "^9.1.1",
     "mongodb": "^3.6.0",
-    "mongoose": "^5.9.29",
+    "mongoose": "^5.10.0",
     "mongoose-auto-increment": "^5.0.1",
     "morgan": "^1.10.0",
     "passport": "^0.4.1",
     "passport-accesstoken": "^0.1.0",
     "passport-local": "^1.0.0",
+    "pug": "^3.0.0",
     "socket.io": "^2.1.1"
   }
 }
