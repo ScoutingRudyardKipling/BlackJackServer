@@ -4,7 +4,6 @@ let Base = require('./Base');
 let express = require('express');
 let router = express.Router();
 let Group = require('../models/Group');
-const ArrayIntersect = require('array-intersection');
 
 class AdminGroups extends Base {
 
@@ -151,7 +150,7 @@ class AdminGroups extends Base {
 
         var promises = [];
         let group = input.groupId;
-        var simpleModifications = ArrayIntersect(Object.keys(input), ['group', 'points']);
+        let simpleModifications = ['group', 'points'].filter(item => input.hasOwnProperty(item));
         var updatingname = (input.name !== undefined && input.name !== group.name);
 
         if (updatingname) {
