@@ -49,7 +49,7 @@ class Auth extends Base {
     postLogin(request, input, response, next) {
         passport.authenticate('local', function (e, group, error, something) {
             if (error) {
-                return response.json({
+                return response.status(401).json({
                     success: false,
                     message: 'invalid credentials'
                 });

@@ -84,7 +84,7 @@ class Groups extends Base {
         let fcm = input['token'];
 
         if(group.FCMTokens.indexOf(fcm) > -1) {
-            response.json({
+            response.status(422).json({
                 success: false,
                 message: "Token wordt al gebruikt"
             });

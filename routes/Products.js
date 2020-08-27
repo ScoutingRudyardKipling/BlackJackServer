@@ -67,14 +67,14 @@ class Products extends Base {
                             type: "product"
                         });
                     }).catch((e) => {
-                        response.json({
+                        response.status(500).json({
                             success: false,
                             error: 'UNKNOWN_ERROR',
                             message: 'Er trad een onbekende fout op.'
                         })
                     });
                 } else {
-                    response.json({
+                    response.status(422).json({
                         success: false,
                         error: 'PRODUCT_ALREADY_SCANNED',
                         message: 'Paniek! Dit product zit al in je winkelwagen.'
@@ -101,7 +101,7 @@ class Products extends Base {
                 let product = self.getProductForUser(products[0], request.user);
 
                 if (product.rewarded) {
-                    response.json({
+                    response.status(422).json({
                         success: false,
                         error: 'PRODUCT_ALREADY_REWARDED',
                         message: 'Hee! Je hebt al punten gekregen voor dit product!'
@@ -141,7 +141,7 @@ class Products extends Base {
                             });
                         }
                     }).catch(() => {
-                        response.json({
+                        response.status(500).json({
                             success: false,
                             error: 'UNKNOWN_ERROR',
                             message: 'Er trad een onbekende fout op.'
@@ -162,7 +162,7 @@ class Products extends Base {
     postReward(request, input, response) {
         Reward.findByCode(input['code'], function (error, rewards) {
             if (error || rewards.length === 0) {
-                response.json({
+                response.status(404).json({
                     success: false,
                     error: 'CODE_UNKNOWN',
                     message: 'Helaas, deze code is ongeldig.'
@@ -182,14 +182,14 @@ class Products extends Base {
                             type: "points"
                         });
                     }).catch(() => {
-                        response.json({
+                        response.status(500).json({
                             success: false,
                             error: 'UNKNOWN_ERROR',
                             message: 'Er trad een onbekende fout op.'
                         })
                     });
                 } else {
-                    response.json({
+                    response.status(422).json({
                         success: false,
                         error: 'REWARD_ALREADY_SCANNED',
                         message: 'Paniek! Je hebt deze reward al ontvangen.'
