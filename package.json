@@ -6,19 +6,19 @@
     "start": "node -r dotenv/config ./bin/www"
   },
   "dependencies": {
-    "cookie-parser": "^1.4.5",
-    "debug": "~4.1.1",
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "firebase-admin": "^9.1.1",
-    "mongodb": "^3.6.0",
-    "mongoose": "^5.10.0",
-    "mongoose-auto-increment": "^5.0.1",
-    "morgan": "^1.10.0",
-    "passport": "^0.4.1",
-    "passport-accesstoken": "^0.1.0",
-    "passport-local": "^1.0.0",
-    "pug": "^3.0.0",
-    "socket.io": "^2.1.1"
+    "cookie-parser": "1.4.5",
+    "debug": "4.1.1",
+    "dotenv": "8.2.0",
+    "express": "4.17.1",
+    "firebase-admin": "9.1.1",
+    "mongodb": "3.6.0",
+    "mongoose": "5.10.1",
+    "mongoose-auto-increment": "5.0.1",
+    "morgan": "1.10.0",
+    "passport": "0.4.1",
+    "passport-accesstoken": "0.1.0",
+    "passport-local": "1.0.0",
+    "pug": "3.0.0",
+    "socket.io": "2.3.0"
   }
 }
