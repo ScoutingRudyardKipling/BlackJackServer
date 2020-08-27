@@ -119,9 +119,7 @@ class AdminGroups extends Base {
                         });
                     }
 
-                    response.json({
-                        success: true
-                    });
+                    response.json({});
                 });
             });
         });
@@ -195,9 +193,7 @@ class AdminGroups extends Base {
                         });
                     }
 
-                    response.json({
-                        success: true
-                    });
+                    response.json({});
                 });
             }, function reject(reason) {
                 return response.status(400).json({

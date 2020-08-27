@@ -124,9 +124,7 @@ class AdminProducts extends Base {
                     });
                 }
 
-                response.json({
-                    success: true
-                });
+                response.json({});
             });
         }).catch(function () {
             response.status(409).json({
@@ -195,7 +193,7 @@ class AdminProducts extends Base {
                 }
             }
 
-            response.json({success: true, count: count});
+            response.json({count: count});
         });
     }
 

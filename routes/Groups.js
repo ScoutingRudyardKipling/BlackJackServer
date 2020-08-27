@@ -40,11 +40,7 @@ class Groups extends Base {
     getGroups(request, input, response) {
         const hour = (new Date()).getHours();
         if(hour > 20 || hour < 1) {
-            response.json({
-                filter: {},
-                data: {scores:[]},
-                success: true
-            });
+            response.json({scores:[]});
             return;
         }
 
@@ -63,11 +59,7 @@ class Groups extends Base {
             this.broadcast('highscores', groups);
             this.sendToAuthenticatedGroup(request, 'get groups', {});
 
-            response.json({
-                filter: filter,
-                data: {scores:groups},
-                success: true
-            });
+            response.json({scores:groups});
         }.bind(this));
     }
 
@@ -78,10 +70,7 @@ class Groups extends Base {
      * @param response
      */
     getCurrentGroup(request, input, response) {
-        return response.json({
-            success: true,
-            data: request.user.getAllData()
-        });
+        return response.json(request.user.getAllData());
     }
 
     /**
@@ -102,10 +91,7 @@ class Groups extends Base {
         } else {
             group.FCMTokens.push(fcm);
             group.save();
-            response.json({
-                success: true,
-                data: {}
-            });
+            response.json({});
         }
     }
 

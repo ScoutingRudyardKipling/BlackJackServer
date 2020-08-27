@@ -51,9 +51,7 @@ class Locations extends Base {
             }
         });
 
-        response.json({
-            success: true
-        });
+        response.json({});
     }
 
 

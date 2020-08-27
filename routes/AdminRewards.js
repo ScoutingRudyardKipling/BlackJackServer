@@ -107,9 +107,7 @@ class AdminRewards extends Base {
                     });
                 }
 
-                response.json({
-                    success: true
-                });
+                response.json({});
             });
         }).catch(function () {
             response.status(409).json({

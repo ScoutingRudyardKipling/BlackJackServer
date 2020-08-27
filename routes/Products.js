@@ -62,12 +62,9 @@ class Products extends Base {
                     request.user.save().then(() => {
                         fcm.sendNewProduct(products[0], request.user);
                         response.json({
-                            success: true,
-                            data: {
-                                groupInfo: request.user.getAllData(),
-                                productId: products[0]._id,
-                                type: "product"
-                            }
+                            groupInfo: request.user.getAllData(),
+                            productId: products[0]._id,
+                            type: "product"
                         });
                     }).catch((e) => {
                         response.json({
@@ -132,21 +129,15 @@ class Products extends Base {
                         fcm.sendUpdateGroupProperty("points", request.user.points, request.user);
                         if (bonus) {
                             response.json({
-                                success: true,
-                                data: {
-                                    groupInfo: request.user.getAllData(),
-                                    message: "Nice, deze " + product.name + " was in de bonus, dus je krijgt de bonus van " + product.reward + " punten twee maal!! Lekker bezig pik!",
-                                    type: "product_reward"
-                                }
+                                groupInfo: request.user.getAllData(),
+                                message: "Nice, deze " + product.name + " was in de bonus, dus je krijgt de bonus van " + product.reward + " punten twee maal!! Lekker bezig pik!",
+                                type: "product_reward"
                             });
                         } else {
                             response.json({
-                                success: true,
-                                data: {
-                                    groupInfo: request.user.getAllData(),
-                                    message: "Nice, zojuist " + product.reward + " punten verdient voor deze " + product.name,
-                                    type: "product_reward"
-                                }
+                                groupInfo: request.user.getAllData(),
+                                message: "Nice, zojuist " + product.reward + " punten verdient voor deze " + product.name,
+                                type: "product_reward"
                             });
                         }
                     }).catch(() => {
@@ -186,12 +177,9 @@ class Products extends Base {
                     request.user.save().then(() => {
                         fcm.sendUpdateGroupProperty("points", request.user.points, request.user);
                         response.json({
-                            success: true,
-                            data: {
-                                groupInfo: request.user.getAllData(),
-                                message: message,
-                                type: "points"
-                            }
+                            groupInfo: request.user.getAllData(),
+                            message: message,
+                            type: "points"
                         });
                     }).catch(() => {
                         response.json({

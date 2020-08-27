@@ -61,11 +61,8 @@ class Auth extends Base {
 
             // send success
             response.json({
-                success: true,
-                data: {
-                    id: group._id,
-                    token: token
-                }
+                id: group._id,
+                token: token
             });
         }).apply(this, [request, response]);
     }
@@ -97,9 +94,7 @@ class Auth extends Base {
                         });
                     }
 
-                    response.json({
-                        success: true
-                    });
+                    response.json({});
                 });
             });
         });
