@@ -39,7 +39,7 @@ class Groups extends Base {
      */
     getGroups(request, input, response) {
         const hour = (new Date()).getHours();
-        if(hour > 20 || hour < 1) {
+        if(hour > 22 || hour < 1) {
             response.json({scores:[]});
             return;
         }
