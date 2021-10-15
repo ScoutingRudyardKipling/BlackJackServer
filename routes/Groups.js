@@ -38,11 +38,11 @@ class Groups extends Base {
      * @param response
      */
     getGroups(request, input, response) {
-        const hour = (new Date()).getHours();
-        if(hour > 22 || hour < 1) {
-            response.json({scores:[]});
-            return;
-        }
+        // const hour = (new Date()).getHours();
+        // if(hour > 22 || hour < 1) {
+        //     response.json({scores:[]});
+        //     return;
+        // }
 
         var filter = {};
         var groups = [];
